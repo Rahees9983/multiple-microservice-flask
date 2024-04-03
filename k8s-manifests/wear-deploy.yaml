@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  generation: 1
+  name: webapp-wear
+  namespace: app-space
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webapp-wear
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: webapp-wear
+    spec:
+      containers:
+      - image: kodekloud/ecommerce:apparels
+        imagePullPolicy: Always
+        name: simple-webapp
+        ports:
+        - containerPort: 8080
+          protocol: TCP
